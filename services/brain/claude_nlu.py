@@ -30,7 +30,7 @@ async def extract_turn_context(call_id: str, history: list[TranscriptWord]) -> T
 
     try:
         response = await client.messages.create(
-            model="claude-haiku-4-5",
+            model="claude-haiku-4-5-20251001",
             max_tokens=300,
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": f"Transcript:\n{transcript_text}\n\nExtract TurnContext JSON:"}]
