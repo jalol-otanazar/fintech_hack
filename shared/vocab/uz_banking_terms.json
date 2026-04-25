@@ -1,0 +1,29 @@
+{
+  "banking_terms": [
+    "kredit karta", "overdraft", "depozit", "kafolat", "PEP tekshiruvi",
+    "AML", "sug'urta", "foiz stavkasi", "muddatli omonat", "valyuta konversiyasi",
+    "ipoteka", "akkreditiv", "to'lov topshirig'i", "plastik karta", "mobil bank",
+    "internet-bank", "limiit", "qarz", "pul o'tkazma", "karta raqami",
+    "CVV", "PIN kod", "hisob raqam", "IBAN", "SWIFT", "valyuta", "so'm",
+    "dollar", "euro", "kredit tarixi", "skoring", "moliyaviy ko'rsatkich",
+    "aktivlar", "passivlar", "balans", "investitsiya", "rentabellik",
+    "daromad", "to'lov", "qarz beruvchi", "qarz oluvchi", "garov",
+    "kafillik", "shartnoma", "tarif", "komissiya", "jazo", "soliq",
+    "bojxona", "litsenziya", "ruxsatnoma", "nazorat", "audit",
+    "hisobot", "tahlil", "prognoz", "byudjet", "xarajat", "foyda",
+    "zarar", "kapital", "fond", "rezerv", "zaxira", "likvidlik",
+    "to'lovga layoqatlilik", "kredit qobiliyati", "risk", "xavf",
+    "sug'urta hodisasi", "kompensatsiya", "haq-huquq", "majburiyat",
+    "kelishuv", "bitim", "tranzaksiya", "operatsiya", "xizmat",
+    "mahsulot", "taklif", "chegirma", "aksiya", "bonus", "cashback",
+    "ball", "rag'batlantirish", "sodiqlik", "mijoz", "klient",
+    "xodim", "operator", "menejer", "filial", "bank", "markaziy bank",
+    "Federal zaxira", "NBUZ", "SSV", "DGK", "kreditlash", "moliyalashtirish",
+    "qarzdorlik", "to'liq to'lash", "qisman to'lash", "kechiktirish",
+    "qayta tuzish", "restrukturizatsiya", "inkasso", "faktoring",
+    "lizing", "ijara", "mulk", "ko'chmas mulk", "avtomobil", "biznes",
+    "tadbirkorlik", "yakka tartibdagi tadbirkor", "yuridik shaxs",
+    "jismoniy shaxs", "rezident", "norezident", "milliy ID", "pasport",
+    "guvohnoma", "ruxsatnoma", "huquqiy holat", "imzo", "elektron imzo"
+  ]
+}

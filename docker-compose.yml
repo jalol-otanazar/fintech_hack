@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+  asr:
+    build: ./services/asr
+    container_name: bankcopilot_asr
+    environment:
+      - USE_STUB=true
+      - ASR_WS_PORT=8765
+      - HF_TOKEN=${HF_TOKEN}
+    ports:
+      - "8765:8765"
+    restart: unless-stopped
+
+  brain:
+    build: ./services/brain
+    container_name: bankcopilot_brain
+    environment:
+      - ASR_WS_URL=ws://asr:8765
+      - BRAIN_PORT=8001
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
+      - ANON_SALT=${ANON_SALT}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    ports:
+      - "8001:8001"
+    depends_on:
+      - asr
+    restart: unless-stopped
+
+  post-call:
+    build: ./services/post-call
+    container_name: bankcopilot_postcall
+    environment:
+      - BRAIN_WS_URL=ws://brain:8001/ws
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - DATABASE_URL=postgresql://bankcopilot:bankcopilot@postgres:5432/bankcopilot
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
+      - ANON_SALT=${ANON_SALT}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    ports:
+      - "8002:8002"
+    depends_on:
+      - brain
+      - postgres
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: bankcopilot_postgres
+    environment:
+      - POSTGRES_USER=bankcopilot
+      - POSTGRES_PASSWORD=bankcopilot
+      - POSTGRES_DB=bankcopilot
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./services/post-call/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    expose:
+      - "5432"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

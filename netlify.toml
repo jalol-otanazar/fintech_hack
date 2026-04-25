@@ -1,0 +1,45 @@
+# netlify.toml — BankCopilot Manager Dashboard
+# Run `npm run dev` from E:/fintech_hack/fintech_hack/
+# Deploy: connect this repo root to Netlify, it picks up this file automatically
+
+[build]
+  publish   = "apps/dashboard/build"
+  command   = "npm --prefix apps/dashboard run build"
+  functions = "netlify/functions"
+
+[dev]
+  # Starts CRA dev server on 3000, netlify dev proxy on 8888
+  command     = "npm --prefix apps/dashboard start"
+  targetPort  = 3000
+  port        = 8888
+  functions   = "netlify/functions"
+  autoLaunch  = false
+
+# ── API redirects: browser hits /calls → serverless function ──────────────────
+# This keeps the API key 100% server-side; the frontend never sees it.
+
+[[redirects]]
+  from   = "/calls"
+  to     = "/.netlify/functions/calls"
+  status = 200
+
+[[redirects]]
+  from   = "/operators/stats"
+  to     = "/.netlify/functions/operators-stats"
+  status = 200
+
+[[redirects]]
+  from   = "/flagged"
+  to     = "/.netlify/functions/flagged"
+  status = 200
+
+[[redirects]]
+  from   = "/compliance"
+  to     = "/.netlify/functions/compliance"
+  status = 200
+
+# SPA fallback — must be last
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200

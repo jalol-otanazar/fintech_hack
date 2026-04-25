@@ -1,0 +1,12 @@
+{
+  "name": "bankcopilot",
+  "private": true,
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "npm --prefix apps/dashboard run build",
+    "install:dashboard": "npm --prefix apps/dashboard install"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.38.1"
+  }
+}

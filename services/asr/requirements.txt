@@ -1,0 +1,9 @@
+faster-whisper
+pyannote.audio
+silero-vad
+websockets>=12.0
+loguru
+pydantic>=2.0
+torch
+torchaudio
+numpy

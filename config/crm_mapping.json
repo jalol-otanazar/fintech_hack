@@ -1,0 +1,15 @@
+{
+  "call_id":          "abs_call_ref",
+  "operator_name":    "operator_full_name",
+  "customer_anon_id": "client_id",
+  "duration_seconds": "call_duration_sec",
+  "branch_name":      "branch_code",
+  "detected_needs":   "client_needs",
+  "offer_name":       "product_offered",
+  "offer_details":    "product_details",
+  "outcome":          "call_result",
+  "next_step":        "follow_up_action",
+  "kyc_done":         "kyc_completed_items",
+  "quality_score":    "quality_index",
+  "summary_text":     "call_summary_uz"
+}

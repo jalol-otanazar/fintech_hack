@@ -1,0 +1,3 @@
+@echo off
+cd /d E:\fintech_hack\fintech_hack
+npx -y @netlify/mcp@latest --site-id 89073d52-1bc8-48eb-a613-98e701cac79a --proxy-path https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..32fm8HoYHIfmPBz4.MBS6gHLaRqT8dsz5_htY9RBW4I2-HYsYHBWtuZtywe1aaiVs_tOWamXrVmyYK5nrh1_Z7j-IGDx6CvnYd7BsG-57bVDk015FzjPjYBOZGCyBaXeT5QIgP8moB5ZembbWKTWdOC2GmpNp_1mcAuCvgdmkYymGiAgBmCc5f2i8o8OqVaEcr6HVtLlphVQKe7dlza7mpoe3FtZlQUwy94361wM4xAaqM-nRqqXY85rj4pz63vbN6suSVJVdGMSniZbqANllOdZmJhUIXwi1pQDHCqPQm8tvyR112hjPyb9EnVLaavBNZglxFd6hMk1SM6QQE5H6N23mirjPZyCcJVNvWxyhdKcI2GiLa5Xv4Irx39zrCxqPNA.Fl3EZfp--fwHjKyjbKoeUQ --no-wait
