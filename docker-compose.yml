@@ -2,7 +2,9 @@ version: "3.9"
 
 services:
   asr:
-    build: ./services/asr
+    build:
+      context: .
+      dockerfile: services/asr/Dockerfile
     container_name: bankcopilot_asr
     environment:
       - USE_STUB=true
@@ -13,7 +15,9 @@ services:
     restart: unless-stopped
 
   brain:
-    build: ./services/brain
+    build:
+      context: .
+      dockerfile: services/brain/Dockerfile
     container_name: bankcopilot_brain
     environment:
       - ASR_WS_URL=ws://asr:8765
@@ -29,7 +33,9 @@ services:
     restart: unless-stopped
 
   post-call:
-    build: ./services/post-call
+    build:
+      context: .
+      dockerfile: services/post-call/Dockerfile
     container_name: bankcopilot_postcall
     environment:
       - BRAIN_WS_URL=ws://brain:8001/ws
