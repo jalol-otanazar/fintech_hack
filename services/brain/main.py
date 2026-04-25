@@ -150,8 +150,14 @@ async def process_turn(call_id: str, session: dict, words: list[TranscriptWord])
     # 1. NLU: extract TurnContext via Claude API
     ctx: TurnContext = await extract_turn_context(call_id, session["history"][-30:])
 
-    # 2. Momentum
-    momentum = session["momentum"].update(ctx.sentiment)
+    # 2. Momentum — pass entities + question flag so all 4 components contribute
+    is_question = any(w.text.endswith("?") for w in words)
+    momentum = session["momentum"].update(
+        ctx.sentiment,
+        entities=ctx.entities if ctx.entities else None,
+        is_question=is_question,
+        expected_duration=120.0,  # demo call ~2 min
+    )
     ctx.momentum = momentum
 
     # 3. Persona (classify once in first 10 turns)

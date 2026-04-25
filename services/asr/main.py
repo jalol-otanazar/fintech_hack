@@ -85,12 +85,49 @@ def classify_lang(text: str) -> str:
 # STUB: fake transcript generator
 # ────────────────────────────────────────────────────────────────────────────
 STUB_LINES = [
-    ("customer", "uz", "Assalomu alaykum, kredit karta haqida so'ramoqchi edim"),
-    ("operator", "uz", "Albatta, sizga yordam beraman. Qanday miqdorni xohlaysiz?"),
-    ("customer", "ru", "Мне интересно, какой у вас процент по карте?"),
-    ("operator", "uz", "Bizda 12 oyga nol foiz taklif bor, limit 15 million so'm"),
-    ("customer", "uz", "Foiz juda yuqori emas-mi? Menga o'ylash kerak"),
-    ("operator", "uz", "Tushunaman, bu ajoyib taklif, ko'p mijozlar mamnun"),
+    # Greeting + identity (KYC: identity_confirmed via "guvohnoma")
+    ("customer", "uz", "Assalomu alaykum, kredit karta olish haqida so'ramoqchi edim"),
+    ("operator", "uz", "Xush kelibsiz! Avval shaxsingizni tasdiqlaylik — guvohnoma raqamingizni ayta olasizmi?"),
+    ("customer", "uz", "Ha, shaxsim tasdiqlangan, guvohnomam bor. Maqsadim — xarid va online to'lovlar"),
+
+    # Income + source (KYC: purpose_of_funds via "maqsad", source_of_income via "daromad")
+    ("operator", "uz", "Rahmat! Oylik daromadingiz qancha va ish joyingiz rasmiy?"),
+    ("customer", "uz", "Ha, rasmiy ishda ishlaman. Oylik maoshim 12 million so'm, IT sektorida"),
+
+    # Product terms (KYC: product_terms_explained via "foiz" + "shartlar")
+    ("operator", "uz", "Ajoyib! Platinum kartamizning shartlari: 24 oyga foiz 0%, limit 30 million so'm, cashback 3%"),
+    ("customer", "uz", "Voy, 30 million so'm limit? Bu menga juda mos! Yillik to'lov bormi?"),
+
+    # Guardrail trigger: "eng yaxshi" + "albatta tasdiqlanadi" — double hit
+    ("operator", "uz", "Bu eng yaxshi mahsulot bizda, albatta tasdiqlanadi arizangiz, hujjat minimal"),
+
+    # Customer very positive — rising sentiment, code-switch to Russian
+    ("customer", "ru", "Звучит отлично! Мне очень нравится. А cashback на все покупки распространяется?"),
+    ("operator", "uz", "Ha, barcha xaridlarda 3% cashback, airport lounge kirish ham bepul!"),
+
+    # PEP + AML (KYC: pep_screening via "PEP"/"siyosiy", aml_acknowledgment via "AML")
+    ("operator", "uz", "Standart savol: siyosiy shaxs yoki PEP maqomingiz bormi? AML tekshiruv kerak"),
+    ("customer", "uz", "Yo'q, PEP emasman, xususiy sektor xodimiman. AML talablarini tushunaman"),
+
+    # Customer high engagement — entities: income_mentioned, amount
+    ("customer", "uz", "12 million so'm daromadim bilan bu platinum karta to'g'ri tanlov, qachon tayyor bo'ladi?"),
+    ("operator", "uz", "2 ish kunida tayyor! Siz uchun premium mijoz sifatida tezlashtirilgan ko'rib chiqish"),
+
+    # Customer accepting — very positive sentiment
+    ("customer", "uz", "Juda yaxshi, bu taklifni qabul qilmoqchiman! Hoziroq rasmiylashtirsak bo'ladimi?"),
+    ("customer", "ru", "Я очень доволен условиями, оформляйте пожалуйста"),
+
+    # Consent (KYC: consent_recorded via "rozilik" + "ruxsat")
+    ("operator", "uz", "Ajoyib qaror! Sizning roziligingizni qayd etamiz. Ruxsat bersangiz ariza rasmiylashtiriladi"),
+    ("customer", "uz", "Ha, roziman va to'liq ruxsat beraman. Imzolashga tayyorman"),
+
+    # Next steps (KYC: next_steps_communicated via "keyingi" + "qadam")
+    ("operator", "uz", "Keyingi qadam: passport skaneri, keyin 2 kun ichida karta uyingizga yetkaziladi"),
+
+    # Warm closing — high positive sentiment
+    ("customer", "uz", "Rahmat, juda professional xizmat! Do'stlarimga ham tavsiya qilaman"),
+    ("customer", "ru", "Спасибо большое, очень доволен! Отличный банк"),
+    ("operator", "uz", "Sizga ham rahmat! Xush ko'rdik, yana murojaat qiling. Xayr!"),
 ]
 
 async def stub_emitter(websocket, call_id: str):
