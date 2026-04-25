@@ -4,8 +4,12 @@
 
 [build]
   publish   = "apps/dashboard/build"
-  command   = "npm --prefix apps/dashboard run build"
+  command   = "npm --prefix apps/dashboard install && npm --prefix apps/dashboard run build"
   functions = "netlify/functions"
+
+[build.environment]
+  CI            = "false"
+  NODE_VERSION  = "18"
 
 [dev]
   # Starts CRA dev server on 3000, netlify dev proxy on 8888
