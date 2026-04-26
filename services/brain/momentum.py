@@ -32,11 +32,12 @@ class MomentumCalculator:
         return round(max(0.0, min(1.0, momentum)), 3)
 
     def _sentiment_trend(self) -> float:
-        if len(self._sentiments) < 2:
-            return max(0.0, self._sentiments[0] + 0.5) if self._sentiments else 0.5
-        slope = (self._sentiments[-1] - self._sentiments[0]) / len(self._sentiments)
-        # Normalize slope to 0-1 range
-        return max(0.0, min(1.0, (slope + 0.5)))
+        if not self._sentiments:
+            return 0.5
+        # Use mean sentiment (not slope) — a consistently positive call should score high
+        avg = sum(self._sentiments) / len(self._sentiments)
+        # Map from [-1.0, 1.0] → [0.0, 1.0]
+        return max(0.0, min(1.0, (avg + 1.0) / 2.0))
 
     def _time_factor(self, expected: float) -> float:
         elapsed = __import__("time").time() - self._call_start

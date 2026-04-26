@@ -56,19 +56,44 @@ def _stub_context(call_id: str, history: list[TranscriptWord]) -> TurnContext:
     """Deterministic fallback when Claude API unavailable."""
     import random
     speaker = history[-1].speaker if history else "customer"
-    text = " ".join(w.text for w in history[-3:]).lower()
+    text = " ".join(w.text for w in history[-5:]).lower()
+
+    # Intent from keywords
     intent = "inquiry_credit_card"
     if "foiz" in text or "процент" in text:
         intent = "objection_rate"
     elif "depozit" in text:
         intent = "inquiry_deposit"
-    elif "kredit" in text:
+    elif "kredit" in text or "karta" in text:
         intent = "inquiry_credit_card"
+    elif "rozilik" in text or "ruxsat" in text:
+        intent = "kyc_disclosure"
+    elif "rahmat" in text or "спасибо" in text:
+        intent = "closing"
+
+    # Entities from keywords — populate so topic_depth accumulates
+    entities: dict = {}
+    if "daromad" in text or "maosh" in text or "доход" in text:
+        entities["income_mentioned"] = True
+    if "million" in text or "млн" in text:
+        entities["amount"] = 12_000_000
+    if "karta" in text or "карта" in text:
+        entities["product"] = "credit_card"
+    if "cashback" in text:
+        entities["cashback"] = True
+    if "lounge" in text:
+        entities["premium_perk"] = True
+
+    # Positive sentiment for a happy demo call (customer is enthusiastic)
+    positive_cues = ["yaxshi", "ajoyib", "rahmat", "доволен", "отлично", "juda", "qabul"]
+    sentiment = 0.65 if any(c in text for c in positive_cues) else round(random.uniform(0.35, 0.65), 2)
+
     return TurnContext(
         call_id=call_id,
         speaker=speaker,
         intent=intent,
-        sentiment=round(random.uniform(-0.2, 0.7), 2),
+        entities=entities,
+        sentiment=sentiment,
         momentum=0.5,
         persona="casual",
     )
