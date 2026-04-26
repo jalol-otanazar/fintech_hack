@@ -33,7 +33,7 @@ def load_models():
     global whisper_model, diarization_pipeline, vad_model
     from faster_whisper import WhisperModel
     logger.info("Loading Whisper large-v3 INT8 …")
-    whisper_model = WhisperModel("large-v3", device="cpu", compute_type="int8")
+    whisper_model = WhisperModel("medium", device="cpu", compute_type="int8")
 
     logger.info("Loading pyannote diarization …")
     from pyannote.audio import Pipeline
