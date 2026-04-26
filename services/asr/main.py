@@ -222,7 +222,7 @@ async def real_emitter(websocket, call_id: str):
 connected_clients: set = set()
 
 async def handler(websocket):
-    call_id = "demo-call-001" if USE_STUB else str(uuid.uuid4())
+    call_id = "demo-call-001"  # fixed so overlay always connects correctly
     connected_clients.add(websocket)
     logger.info(f"Client connected. call_id={call_id}. Total={len(connected_clients)}")
     try:

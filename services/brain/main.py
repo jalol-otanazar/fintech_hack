@@ -141,6 +141,9 @@ async def handle_asr_message(msg: dict):
         session["history"].extend(words)
         session["turn_num"] += 1
 
+        # Forward raw transcript to UI so TranscriptPanel shows live words
+        await broadcast(call_id, {"type": "transcript_chunk", "payload": msg["payload"]})
+
         # Process only every 3rd chunk to avoid flooding Claude API
         if session["turn_num"] % 3 != 0:
             return
