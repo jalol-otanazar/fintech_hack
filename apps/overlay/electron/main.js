@@ -29,7 +29,7 @@ function createWindow() {
 
   mainWindow.setIgnoreMouseEvents(false);
   if (IS_DEV) {
-    mainWindow.loadURL('http://localhost:3000');
+    mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools({ mode: 'detach' });
   } else {
     mainWindow.loadFile(path.join(__dirname, '../build/index.html'));
