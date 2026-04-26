@@ -13,12 +13,12 @@ let callId = null;
 // ── Window ──────────────────────────────────────────────────────────────────
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1200, height: 220,
-    x: 0, y: 0,
-    frame: false,
-    transparent: true,
-    alwaysOnTop: true,
-    skipTaskbar: true,
+    width: 480, height: 600,
+    x: 20, y: 20,
+    frame: true,
+    transparent: false,
+    alwaysOnTop: false,
+    skipTaskbar: false,
     resizable: true,
     webPreferences: {
       nodeIntegration: false,
