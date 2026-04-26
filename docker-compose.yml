@@ -19,6 +19,10 @@ services:
       context: .
       dockerfile: services/brain/Dockerfile
     container_name: bankcopilot_brain
+    volumes:
+      - ./services/brain:/app
+      - ./services/post-call/crm_adapter.py:/app/crm_adapter.py
+      - ./shared:/app/shared
     environment:
       - ASR_WS_URL=ws://asr:8765
       - BRAIN_PORT=8001
