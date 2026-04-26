@@ -24,7 +24,7 @@ services:
       - ./services/post-call/crm_adapter.py:/app/crm_adapter.py
       - ./shared:/app/shared
     environment:
-      - ASR_WS_URL=ws://asr:8765
+      - ASR_WS_URL=ws://host.docker.internal:8765
       - BRAIN_PORT=8001
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - ENCRYPTION_KEY=${ENCRYPTION_KEY}

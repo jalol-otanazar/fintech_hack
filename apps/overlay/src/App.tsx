@@ -34,7 +34,13 @@ type Action =
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case 'CALL_START':   return { ...state, callId: action.callId, callStart: Date.now(), words: [] };
-    case 'TRANSCRIPT':   return { ...state, words: [...state.words, ...action.words].slice(-200) };
+    case 'TRANSCRIPT': {
+      // Dedup: skip words whose ts_start already exists in state
+      const existingTs = new Set(state.words.map(w => w.ts_start));
+      const fresh = action.words.filter(w => !existingTs.has(w.ts_start));
+      if (!fresh.length) return state;
+      return { ...state, words: [...state.words, ...fresh].slice(-200) };
+    }
     case 'TURN_CTX':     return { ...state, turnCtx: action.ctx, momentum: action.ctx.momentum };
     case 'GUARDRAIL':    return { ...state, guardrail: action.alert };
     case 'STRESS':       return { ...state, stress: true };
