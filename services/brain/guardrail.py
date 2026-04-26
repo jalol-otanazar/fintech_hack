@@ -31,5 +31,5 @@ class GuardrailChecker:
 
     def check_kyc(self, kyc_state, text: str) -> None:
         """Advance KYC based on text keywords — convenience wrapper."""
-        from services.brain.kyc import KycStateMachine
+        from kyc import KycStateMachine
         KycStateMachine().advance(kyc_state, text, "operator")
