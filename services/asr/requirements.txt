@@ -1,11 +1,7 @@
-faster-whisper
-pyannote.audio
-silero-vad
+groq>=0.9.0
 websockets>=12.0
 loguru
 pydantic>=2.0
-torch
-torchaudio
 numpy
 sounddevice
 soundfile
