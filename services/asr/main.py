@@ -11,13 +11,16 @@ from pathlib import Path
 import websockets
 from loguru import logger
 
-# ── path so we can import shared types ──────────────────────────────────────
-sys.path.insert(0, str(Path(__file__).parents[2]))
+# ── path: works in Docker (/app) and local dev (services/asr → project root)
+_here = Path(__file__).resolve().parent
+_root = _here.parents[1] if len(_here.parents) > 1 else _here
+sys.path.insert(0, str(_here))
+sys.path.insert(0, str(_root))
 from shared.types.models import TranscriptWord, TranscriptChunk
 
 USE_STUB  = os.getenv("USE_STUB", "true").lower() == "true"
 WS_PORT   = int(os.getenv("ASR_WS_PORT", "8765"))
-VOCAB_PATH = Path(__file__).parents[2] / "shared/vocab/uz_banking_terms.json"
+VOCAB_PATH = _root / "shared/vocab/uz_banking_terms.json"
 
 # ────────────────────────────────────────────────────────────────────────────
 # Real model loading (skipped in stub mode)

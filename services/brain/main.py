@@ -11,18 +11,23 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from loguru import logger
 
-sys.path.insert(0, str(Path(__file__).parents[2]))
+# ── path: works in Docker (/app) and local dev (services/brain → project root)
+_here = Path(__file__).resolve().parent
+_root = _here.parents[1] if len(_here.parents) > 1 else _here
+sys.path.insert(0, str(_here))  # direct module imports (momentum, nbo, etc.)
+sys.path.insert(0, str(_root))  # shared types
+
 from shared.types.models import (
     TranscriptWord, TurnContext, ActionCard, KycState,
     GuardrailAlert, KYC_ITEMS, CustomerProfile,
 )
-from services.brain.momentum import MomentumCalculator
-from services.brain.persona import PersonaClassifier
-from services.brain.nbo import NBOEngine
-from services.brain.kyc import KycStateMachine
-from services.brain.guardrail import GuardrailChecker
-from services.brain.stress import StressDetector
-from services.brain.claude_nlu import extract_turn_context
+from momentum import MomentumCalculator
+from persona import PersonaClassifier
+from nbo import NBOEngine
+from kyc import KycStateMachine
+from guardrail import GuardrailChecker
+from stress import StressDetector
+from claude_nlu import extract_turn_context
 
 ASR_WS_URL  = os.getenv("ASR_WS_URL", "ws://localhost:8765")
 BRAIN_PORT  = int(os.getenv("BRAIN_PORT", "8001"))
@@ -35,7 +40,8 @@ sessions: dict[str, dict] = {}
 # UI WebSocket clients: call_id → set of websockets
 ui_clients: dict[str, set] = {}
 
-_post_call_dir = str(Path(__file__).parents[1] / "post-call")
+# crm_adapter.py: copied to /app/ in Docker, lives in services/post-call/ locally
+_post_call_dir = str(_here.parent / "post-call") if (_here.parent / "post-call").exists() else str(_here)
 if _post_call_dir not in sys.path:
     sys.path.insert(0, _post_call_dir)
 from crm_adapter import get_adapter as _get_crm_adapter
